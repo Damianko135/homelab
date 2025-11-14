@@ -4,12 +4,13 @@
 # =============================================================================
 # Master playbook that orchestrates all homelab configuration
 
-- import_playbook: proxmox.yml
+- name: Import Proxmox configuration playbook
+  import_playbook: proxmox.yml
   tags:
     - proxmox
-    - never  # Remove 'never' tag when ready to run
+    - never # Remove 'never' tag when ready to run
 
 # Future playbooks can be added here as your homelab grows
 # - import_playbook: docker.yml
-# - import_playbook: kubernetes.yml
+# - import_playbook: kubernetes.ymlPl
 # - import_playbook: monitoring.yml

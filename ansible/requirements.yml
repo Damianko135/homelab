@@ -3,27 +3,36 @@
 # ANSIBLE COLLECTIONS REQUIREMENTS
 # =============================================================================
 # Install with: ansible-galaxy install -r requirements.yml
+# Version requirements updated based on installed versions as of November 2025
 
 collections:
   # Community general collection (essential utilities)
   - name: community.general
-    version: ">=7.0.0"
-  
+    version: ">=7.5.2"
+
   # Crypto collection (for certificates, keys, etc.)
   - name: community.crypto
-    version: ">=2.0.0"
-  
+    version: ">=2.16.1"
+
   # Docker collection (for container management)
   - name: community.docker
-    version: ">=3.0.0"
-  
+    version: ">=3.4.11"
+
   # MySQL collection (if you use MySQL/MariaDB)
   - name: community.mysql
-    version: ">=3.0.0"
-  
+    version: ">=3.8.0"
+
   # PostgreSQL collection (if you use PostgreSQL)
   - name: community.postgresql
-    version: ">=2.0.0"
+    version: ">=2.4.3"
+
+  # Additional useful collections that are pre-installed
+  - name: ansible.posix
+    version: ">=1.5.4"
+
+  # Kubernetes collection (for container orchestration)
+  - name: kubernetes.core
+    version: ">=2.4.0"
 
 # Ansible roles from Galaxy (if needed)
 # roles:

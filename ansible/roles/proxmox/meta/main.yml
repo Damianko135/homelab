@@ -10,7 +10,7 @@ galaxy_info:
   company: Homelab
   license: MIT
   min_ansible_version: "2.9"
-  
+
   platforms:
     - name: Debian
       versions:
@@ -18,9 +18,9 @@ galaxy_info:
         - bookworm
     - name: Ubuntu
       versions:
-        - "20.04"
-        - "22.04"
-        - "24.04"
+        - focal
+        - jammy
+        - noble
 
   galaxy_tags:
     - proxmox

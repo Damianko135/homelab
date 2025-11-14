@@ -1,15 +1,32 @@
 # Ansible Core and Collections
-ansible>=8.0.0,<9.0.0
-ansible-core>=2.15.0,<2.16.0
+# Based on actual installed versions as of November 2025
+ansible>=8.7.0,<9.0.0
+ansible-core>=2.19.4,<3.0.0
+ansible-lint>=25.11.0
 
 # SSH and Connection Libraries
-paramiko>=3.3.0
-cryptography>=41.0.0
+paramiko>=4.0.0
+cryptography>=46.0.0
 
 # Additional useful libraries for Ansible
-jinja2>=3.1.0
-PyYAML>=6.0
-requests>=2.31.0
+jinja2>=3.1.6
+PyYAML>=6.0.3
+requests>=2.32.0
+
+# YAML processing (used by ansible-lint)
+ruamel.yaml>=0.18.16
 
 # For better performance and debugging
 mitogen>=0.3.0
+
+# Additional Ansible development tools
+ansible-compat>=25.11.0
+yamllint>=1.37.0
+
+# Testing and development tools (optional - for development environments)
+# Uncomment if you want to run tests or develop roles
+# molecule>=25.11.0
+# pytest>=9.0.0
+# pytest-ansible>=25.11.1
+# tox>=4.32.0
+# tox-ansible>=25.11.1

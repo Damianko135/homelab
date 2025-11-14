@@ -1,0 +1,32 @@
+---
+# =============================================================================
+# ANSIBLE COLLECTIONS REQUIREMENTS
+# =============================================================================
+# Install with: ansible-galaxy install -r requirements.yml
+
+collections:
+  # Community general collection (essential utilities)
+  - name: community.general
+    version: ">=7.0.0"
+  
+  # Crypto collection (for certificates, keys, etc.)
+  - name: community.crypto
+    version: ">=2.0.0"
+  
+  # Docker collection (for container management)
+  - name: community.docker
+    version: ">=3.0.0"
+  
+  # MySQL collection (if you use MySQL/MariaDB)
+  - name: community.mysql
+    version: ">=3.0.0"
+  
+  # PostgreSQL collection (if you use PostgreSQL)
+  - name: community.postgresql
+    version: ">=2.0.0"
+
+# Ansible roles from Galaxy (if needed)
+# roles:
+#   # Add roles here as needed
+#   - name: geerlingguy.docker
+#   - name: geerlingguy.pip

@@ -1,0 +1,31 @@
+---
+# =============================================================================
+# PROXMOX ROLE - DEFAULT VARIABLES
+# =============================================================================
+# These are the default values for the Proxmox role
+# Override these in your playbook or inventory as needed
+
+# Repository Management
+proxmox_disable_enterprise_repo: true
+proxmox_enable_no_subscription_repo: true
+proxmox_disable_ceph_enterprise_repo: true
+proxmox_enable_ceph_no_subscription_repo: false
+ceph_version: "reef"
+
+# Web UI Configuration
+proxmox_disable_subscription_nag: true
+proxmox_ensure_web_ui_running: true
+
+# System Configuration
+proxmox_update_cache: true
+proxmox_upgrade_packages: false  # Set to true if you want automatic upgrades
+proxmox_check_reboot_required: true
+proxmox_ensure_ssh_running: true
+proxmox_configure_ntp: true
+
+# Timezone configuration (optional)
+# proxmox_timezone: "Europe/Amsterdam"  # Uncomment and set your timezone
+
+# Backup configuration
+proxmox_backup_config_files: true
+proxmox_backup_retention_days: 30

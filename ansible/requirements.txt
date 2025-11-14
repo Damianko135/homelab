@@ -1,0 +1,15 @@
+# Ansible Core and Collections
+ansible>=8.0.0,<9.0.0
+ansible-core>=2.15.0,<2.16.0
+
+# SSH and Connection Libraries
+paramiko>=3.3.0
+cryptography>=41.0.0
+
+# Additional useful libraries for Ansible
+jinja2>=3.1.0
+PyYAML>=6.0
+requests>=2.31.0
+
+# For better performance and debugging
+mitogen>=0.3.0

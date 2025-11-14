@@ -1,0 +1,45 @@
+---
+# =============================================================================
+# PROXMOX HOMELAB CONFIGURATION PLAYBOOK
+# =============================================================================
+# This playbook configures Proxmox VE hypervisor hosts for homelab usage
+# Based on proven patterns from Damianko135/ansible repository
+
+- name: Configure Proxmox VE Homelab Hosts  
+  hosts: proxmox
+  become: true
+  gather_facts: true
+  
+  roles:
+    - role: proxmox
+      tags:
+        - proxmox
+        - virtualization
+        - hypervisor
+
+  # ==========================================================================
+  # POST-DEPLOYMENT VERIFICATION
+  # ==========================================================================
+  post_tasks:
+    - name: Display Proxmox configuration summary
+      ansible.builtin.debug:
+        msg: |
+          ✅ Proxmox VE homelab configuration completed successfully
+          Host: {{ inventory_hostname }}
+          Distribution: {{ ansible_distribution }} {{ ansible_distribution_version }}
+          Kernel: {{ ansible_kernel }}
+          Architecture: {{ ansible_architecture }}
+          
+          🔧 Configuration applied:
+          - Enterprise repository disabled: {{ proxmox_disable_enterprise_repo | default('true') }}
+          - No-subscription repository enabled: {{ proxmox_enable_no_subscription_repo | default('true') }}
+          - Subscription notifications disabled: {{ proxmox_disable_subscription_nag | default('true') }}
+          
+          🌐 Web UI: https://{{ ansible_default_ipv4.address }}:8006
+          
+          📝 Next steps:
+          1. Access the web interface to complete setup
+          2. Configure storage if needed
+          3. Create VMs or containers
+      tags:
+        - summary

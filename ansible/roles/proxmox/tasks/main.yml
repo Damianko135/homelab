@@ -1,0 +1,69 @@
+---
+# =============================================================================
+# PROXMOX ROLE - MAIN TASKS  
+# =============================================================================
+# This role configures Proxmox VE hosts and disables subscription notifications
+
+# =============================================================================
+# REPOSITORY MANAGEMENT
+# =============================================================================
+- name: Comment out or disable enterprise repository
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    regexp: '^deb https://enterprise.proxmox.com'
+    line: '# deb https://enterprise.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-enterprise'
+    backup: yes
+    create: yes
+  when: proxmox_disable_enterprise_repo | default(true)
+  notify: update apt cache
+  tags:
+    - proxmox
+    - repositories
+
+- name: Add Proxmox no-subscription repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://download.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-no-subscription"
+    state: present
+    filename: pve-no-subscription
+  when: proxmox_enable_no_subscription_repo | default(true)
+  notify: update apt cache
+  tags:
+    - proxmox
+    - repositories
+
+# =============================================================================
+# BACKUP ORIGINAL CONFIGURATION
+# =============================================================================
+- name: Check if proxmoxlib.js backup exists
+  ansible.builtin.stat:
+    path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak
+  register: proxmoxlib_backup
+  tags:
+    - proxmox
+    - backup
+
+- name: Backup proxmoxlib.js before modification
+  ansible.builtin.copy:
+    src: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+    dest: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak
+    remote_src: true
+    owner: root
+    group: root
+    mode: "0644"
+  when: not proxmoxlib_backup.stat.exists
+  tags:
+    - proxmox
+    - backup
+
+# =============================================================================
+# PROXMOX WEB UI MODIFICATIONS
+# =============================================================================
+- name: Disable subscription notification popup in Proxmox Web UI
+  ansible.builtin.replace:
+    path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+    regexp: 'Ext\.Msg\.show\(\s*{\s*title:\s*gettext\(.*?No valid subscription.*?\)[\s\S]*?}\);'
+    replace: "// Subscription notification disabled by Ansible"
+  notify: Restart pveproxy
+  tags:
+    - proxmox
+    - ui_modifications

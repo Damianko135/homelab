@@ -1,0 +1,64 @@
+{
+	"name": "Ansible Homelab Development",
+	"image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
+	
+	// Install additional tools and features
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {
+			"version": "latest"
+		}
+	},
+
+	// Customize VS Code settings and extensions
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.ansible",
+				"ms-python.python",
+				"ms-python.pylint",
+				"vscoss.vscode-ansible",
+				"ms-vscode.yaml",
+				"redhat.vscode-yaml"
+			],
+			"settings": {
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"ansible.python.interpreterPath": "/usr/local/bin/python",
+				"ansible.validation.enabled": true,
+				"ansible.validation.lint.enabled": true,
+				"files.associations": {
+					"*.yml": "ansible",
+					"*.yaml": "ansible"
+				},
+				"yaml.schemas": {
+					"https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json": [
+						"playbooks/*.yml",
+						"playbooks/*.yaml",
+						"roles/*/tasks/*.yml",
+						"roles/*/tasks/*.yaml",
+						"roles/*/handlers/*.yml",
+						"roles/*/handlers/*.yaml"
+					]
+				}
+			}
+		}
+	},
+
+	// Install Python requirements and Ansible collections after container creation
+	"postCreateCommand": "cd /workspaces/homelab/ansible && pip install -r requirements.txt && ansible-galaxy install -r requirements.yml",
+
+	// Mount SSH keys for Ansible connections (optional - adjust path as needed)
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+	],
+
+	// Forward common ports that might be useful for homelab services
+	"forwardPorts": [8006, 9090, 3000, 8080],
+
+	// Use vscode user (non-root) for security
+	"remoteUser": "vscode",
+
+	// Working directory
+	"workspaceFolder": "/workspaces/homelab"
+}

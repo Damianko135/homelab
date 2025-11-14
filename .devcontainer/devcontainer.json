@@ -48,10 +48,10 @@
 	// Install Python requirements and Ansible collections after container creation
 	"postCreateCommand": "cd /workspaces/homelab/ansible && pip install -r requirements.txt && ansible-galaxy install -r requirements.yml",
 
-	// Mount SSH keys for Ansible connections (optional - adjust path as needed)
-	"mounts": [
-		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-	],
+	// Mount SSH keys for Ansible connections (optional - uncomment and adjust path as needed)
+	// "mounts": [
+	//	"source=${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+	// ],
 
 	// Forward common ports that might be useful for homelab services
 	"forwardPorts": [8006, 9090, 3000, 8080],

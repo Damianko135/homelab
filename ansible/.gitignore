@@ -7,6 +7,11 @@
 .vault_pass
 vault_pass.txt
 
+# Vault files - NEVER commit secrets to public repos
+**/vault.yml
+**/vault_*.yml
+**/*vault*.yml
+
 # Fact caching
 tmp/
 .ansible/

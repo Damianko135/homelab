@@ -1,0 +1,17 @@
+---
+# =============================================================================
+# PROXMOX GROUP VARIABLES
+# =============================================================================
+# Variables specific to the proxmox host group
+
+# Authentication using vault variables
+ansible_ssh_pass: "{{ vault_ssh_password }}"
+ansible_become_pass: "{{ vault_sudo_password }}"
+
+# Force password authentication
+ansible_ssh_common_args: '-o PreferredAuthentications=password -o PubkeyAuthentication=no'
+
+# Proxmox-specific configuration variables
+proxmox_disable_enterprise_repo: true
+proxmox_enable_no_subscription_repo: true
+proxmox_disable_subscription_nag: true

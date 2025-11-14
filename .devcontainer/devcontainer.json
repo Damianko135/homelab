@@ -1,7 +1,6 @@
 {
 	"name": "Ansible Homelab Development",
 	"image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
-	
 	// Install additional tools and features
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
@@ -10,7 +9,6 @@
 			"version": "latest"
 		}
 	},
-
 	// Customize VS Code settings and extensions
 	"customizations": {
 		"vscode": {
@@ -27,10 +25,12 @@
 				"ansible.python.interpreterPath": "/usr/local/bin/python",
 				"ansible.validation.enabled": true,
 				"ansible.validation.lint.enabled": true,
+				// Make sure YAML and Ansible files are recognized properly
 				"files.associations": {
 					"*.yml": "ansible",
 					"*.yaml": "ansible"
 				},
+				// YAML schemas for Ansible linting and validation
 				"yaml.schemas": {
 					"https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/ansible.json": [
 						"playbooks/*.yml",
@@ -44,21 +44,26 @@
 			}
 		}
 	},
-
 	// Install Python requirements and Ansible collections after container creation
-	"postCreateCommand": "cd /workspaces/homelab/ansible && pip install -r requirements.txt && ansible-galaxy install -r requirements.yml",
-
-	// Mount SSH keys for Ansible connections (optional - uncomment and adjust path as needed)
-	// "mounts": [
-	//	"source=${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
-	// ],
-
-	// Forward common ports that might be useful for homelab services
-	"forwardPorts": [8006, 9090, 3000, 8080],
-
-	// Use vscode user (non-root) for security
+	"postCreateCommand": "sudo chown -R vscode:vscode /workspaces/homelab && cd /workspaces/homelab/ansible && pip install -r requirements.txt && ansible-galaxy install -r requirements.yml && if [ -d /home/vscode/.ssh ]; then sudo chown -R vscode:vscode /home/vscode/.ssh && sudo chmod 700 /home/vscode/.ssh || true; fi",
+	// Fix ownership on startup
+	"postStartCommand": "sudo chown -R vscode:vscode /workspaces/homelab && if [ -d /home/vscode/.ssh ]; then sudo chown -R vscode:vscode /home/vscode/.ssh && sudo chmod 700 /home/vscode/.ssh && sudo chmod 600 /home/vscode/.ssh/* || true; fi",
+	"mounts": [
+		// Optional: bind your local SSH directory if you need private keys in the container.
+		// Commented out by default because binding a host ~/.ssh can prevent the container from starting
+		// if the source path does not exist or if permissions conflict with the container user.
+		// To enable, uncomment the following line and ensure the host path exists and you understand the risks:
+		"source=${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind"
+	],
+	// Forward common ports used in homelab services
+	"forwardPorts": [
+		8006,
+		9090,
+		3000,
+		8080
+	],
+	// Use non-root VS Code user
 	"remoteUser": "vscode",
-
-	// Working directory
+	// Set working directory
 	"workspaceFolder": "/workspaces/homelab"
 }

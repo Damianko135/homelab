@@ -1,0 +1,41 @@
+---
+# =============================================================================
+# VAULT TEMPLATE - COPY TO vault.yml AND CUSTOMIZE
+# =============================================================================
+# This is a template for your encrypted vault file
+# 1. Copy this to vault.yml: cp vault.yml.template vault.yml
+# 2. Encrypt it: ansible-vault encrypt vault.yml
+# 3. Edit encrypted: ansible-vault edit vault.yml
+
+# Example vault variables (replace with your actual secrets)
+# vault_proxmox_root_password: "your-secure-password-here"
+# vault_api_keys:
+#   openweather: "your-api-key"
+#   notification_service: "your-service-key"
+
+# Example database credentials
+# vault_db_credentials:
+#   username: "dbuser"
+#   password: "secure-db-password"
+
+# Example SSL certificates (base64 encoded)
+# vault_ssl_cert: |
+#   LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0t...
+# vault_ssl_key: |
+#   LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0t...
+
+# SSH keys for automation
+# vault_ssh_private_key: |
+#   -----BEGIN OPENSSH PRIVATE KEY-----
+#   your-private-key-here
+#   -----END OPENSSH PRIVATE KEY-----
+
+# =============================================================================
+# IMPORTANT SECURITY NOTES:
+# =============================================================================
+# - NEVER commit vault.yml to git (it should be in .gitignore)
+# - Use strong, unique passwords for vault encryption
+# - Consider using external secret management (HashiCorp Vault, AWS Secrets Manager)
+# - For production: use CI/CD secret injection instead of vault files
+# - Rotate secrets regularly
+# - Use different vault files for different environments (dev/staging/prod)

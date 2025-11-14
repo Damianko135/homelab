@@ -18,13 +18,13 @@ proxmox_ensure_web_ui_running: true
 
 # System Configuration
 proxmox_update_cache: true
-proxmox_upgrade_packages: false  # Set to true if you want automatic upgrades
+proxmox_upgrade_packages: true  # Set to true if you want automatic upgrades
 proxmox_check_reboot_required: true
 proxmox_ensure_ssh_running: true
 proxmox_configure_ntp: true
 
 # Timezone configuration (optional)
-# proxmox_timezone: "Europe/Amsterdam"  # Uncomment and set your timezone
+proxmox_timezone: "Europe/Amsterdam"  # Uncomment and set your timezone
 
 # Backup configuration
 proxmox_backup_config_files: true
